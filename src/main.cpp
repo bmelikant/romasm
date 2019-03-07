@@ -37,7 +37,9 @@ static const map<string,command_callback_t> command_map = {
  * @return nothing. when an exit command is received, exit(exit_code) will be called
  */
 void do_command(int args_count, char *arguments[]) {
-	if (args_count < 1 || command_map.find(arguments[0]) == command_map.end()) {
+	if (args_count < 1) {
+		print_usage("program");
+	} else if (command_map.find(arguments[0]) == command_map.end()) {
 		print_usage("unsupported");
 	} else {
 		// we found the processing function above, so now we can just defer to the processing function
@@ -49,22 +51,22 @@ void do_command(int args_count, char *arguments[]) {
 	}
 }
 
+/**
+ * @fn print_usage(): print help information for the given command
+ * If no command is passed into this function, the program will print
+ * usage data for the program itself
+ */
 void print_usage(string command) {
 	// if the command can't be found, print the program usage
 	if (usage_map.find(command) == usage_map.end()) {
-		print_usage("program");
+		print_usage("unsupported");
 	} else {
 		usage_callback_t usage_fn = usage_map.at(command);
 		usage_fn();
 	}
 }
 
-/**
- * @fn print_usage(): print help information for the given command
- * If no command is passed into this function, the program will print
- * usage data for the program itself
- */
-
+// stub to command line interpreter
 int main(int argc, char *argv[]) {
 	do_command(argc-1,argv+1);
 	return 0;

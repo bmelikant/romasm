@@ -1,5 +1,4 @@
-ACLOCAL_AMFLAGS=-I m4 --install
-AUTOMAKE_OPTIONS=subdir-objects
+ACLOCAL_AMFLAGS = -I m4 --install
 
 bin_PROGRAMS=romasm
 romasm_SOURCES=\
